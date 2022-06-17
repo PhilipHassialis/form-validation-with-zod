@@ -4,15 +4,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const schema = z
   .object({
     firstName: z.string(),
-    lastName: z.string(),
+    lastName: z.string().min(10),
     email: z.string().email(),
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8),
+    password: z.string().min(5),
+    confirmPassword: z.string().min(5),
     country: z.string(),
+    dateOfBirth: z.date(),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
@@ -27,7 +31,7 @@ const schema = z
         path: ["confirmPassword"],
       });
     }
-    if (data.country === "") {
+    if (!data.country || data.country === "") {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Country is required",
@@ -81,12 +85,14 @@ function App() {
                 <Controller
                   name="firstName"
                   control={control}
-                  defaultValue=""
-                  render={({ field }) => (
+                  defaultValue={""}
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
                     <Form.Control
                       type="text"
                       placeholder="Firstname"
-                      {...field}
+                      onChange={onChange}
+                      value={value}
+                      ref={ref}
                       isInvalid={errors.firstName}
                     />
                   )}
@@ -102,7 +108,7 @@ function App() {
                 <Controller
                   name="lastName"
                   control={control}
-                  defaultValue=""
+                  defaultValue={""}
                   render={({ field }) => (
                     <Form.Control
                       type="text"
@@ -152,7 +158,7 @@ function App() {
                 <Controller
                   name="password"
                   control={control}
-                  defaultValue=""
+                  defaultValue={""}
                   render={({ field }) => (
                     <Form.Control
                       type="password"
@@ -194,14 +200,14 @@ function App() {
                 )}
               </Form.Group>
             </Row>
-            {countriesData.length > 0 && (
-              <Row className="mb-3">
-                <Form.Group as={Col} controlId="formBasicCountry">
-                  <Form.Label>Country of birth</Form.Label>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formBasicCountry">
+                <Form.Label>Country of birth</Form.Label>
+                {countriesData.length > 0 && (
                   <Controller
                     name="country"
                     control={control}
-                    defaultValue=""
+                    defaultValue={""}
                     render={({ field }) => (
                       <Select
                         options={countriesData}
@@ -213,14 +219,37 @@ function App() {
                       />
                     )}
                   />
-                  {errors.country?.message && (
-                    <div style={{ color: "red", fontSize: "0.8rem" }}>
-                      {errors.country.message}
-                    </div>
+                )}
+                {errors.country?.message && (
+                  <div style={{ color: "red", fontSize: "0.8rem" }}>
+                    {errors.country.message}
+                  </div>
+                )}
+              </Form.Group>
+              <Form.Group as={Col} controlId="formDateOfBirth">
+                <Form.Label>Date of birth</Form.Label>
+                <Controller
+                  name={"dateOfBirth"}
+                  control={control}
+                  render={({ field }) => (
+                    <DatePicker
+                      placeholderText="Select date"
+                      onChange={(date) => {
+                        console.log(date);
+                        field.onChange(date);
+                      }}
+                      selected={field.value}
+                    />
                   )}
-                </Form.Group>
-              </Row>
-            )}
+                />
+                {errors.dateOfBirth?.message && (
+                  <div style={{ color: "red", fontSize: "0.8rem" }}>
+                    {errors.dateOfBirth.message}
+                  </div>
+                )}
+              </Form.Group>
+            </Row>
+
             <Button variant="primary" type="submit">
               Submit
             </Button>

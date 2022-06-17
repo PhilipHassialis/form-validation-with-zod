@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const schema = z
   .object({
-    firstName: z.string(),
+    firstName: z.string().min(10),
     lastName: z.string().min(10),
     email: z.string().email(),
     password: z.string().min(5),

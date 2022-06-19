@@ -12,11 +12,14 @@ const FormDate = ({ formControlId, label, control, errors }) => {
         control={control}
         render={({ field }) => (
           <DatePicker
+            isClearable
+            customInput={<input className="form-control" />}
             placeholderText="Select date"
             onChange={(date) => {
               field.onChange(date);
             }}
             selected={field.value}
+            dateFormat="dd/MM/yyyy"
           />
         )}
       />

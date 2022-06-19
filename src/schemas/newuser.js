@@ -3,11 +3,19 @@ import { z } from "zod";
 export const newuser = z
   .object({
     firstName: z.string().min(1, { message: "First name is required" }),
-    lastName: z.string().min(8),
+    lastName: z.string().min(4, {
+      message: "Last name is required and must be over 4 characters long",
+    }),
     email: z.string().email(),
-    password: z.string().min(5),
-    confirmPassword: z.string().min(5),
-    country: z.string().min(2, { message: "Country is required" }),
+    password: z
+      .string()
+      .min(5, { message: "Password must be at least 5 characters long" }),
+    confirmPassword: z
+      .string()
+      .min(5, { message: "Password must be at least 5 characters long" }),
+    countryOfBirth: z
+      .string()
+      .min(2, { message: "Country of birth is required" }),
     dateOfBirth: z.date(),
   })
   .superRefine((data, ctx) => {

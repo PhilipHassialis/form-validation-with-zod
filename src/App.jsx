@@ -1,12 +1,11 @@
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useEffect, useState } from "react";
 import FormDate from "./components/FormDate";
 import FormString from "./components/FormString";
 import FormDropdown from "./components/FormDropdown";
 import { newuser as newuserSchema } from "./schemas/newuser";
+import { getCountriesData } from "./hooks/dataHooks";
 
 function App() {
   const {
@@ -17,30 +16,11 @@ function App() {
     resolver: zodResolver(newuserSchema),
   });
 
+  const countriesData = getCountriesData();
+
   const submitForm = (data) => {
     console.log(data);
   };
-
-  const [countriesData, setCountriesData] = useState([]);
-
-  useEffect(() => {
-    const getCountries = async () => {
-      const resp = await fetch(
-        "https://restcountries.com/v3.1/all?fields=name,cca2"
-      );
-      const data = await resp.json();
-      setCountriesData(
-        data
-          .map((country) => ({
-            value: country.cca2,
-            label: country.name.common,
-          }))
-          .sort((a, b) => a.label.localeCompare(b.label))
-      );
-    };
-
-    getCountries();
-  }, []);
 
   return (
     <Container>
@@ -73,6 +53,7 @@ function App() {
                 formControlId={"formBasicEmail"}
                 errors={errors}
                 placeholder={"Type your email"}
+                type="email"
               />
             </Row>
             <Row>
@@ -98,7 +79,7 @@ function App() {
             <Row className="mb-3">
               <FormDropdown
                 control={control}
-                fieldName={"country"}
+                fieldName={"countryOfBirth"}
                 label="Country of Birth"
                 formControlId={"formBasicCountry"}
                 errors={errors}

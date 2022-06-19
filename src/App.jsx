@@ -91,6 +91,8 @@ function App() {
                 errors={errors}
                 label={"Date of Birth"}
                 formControlId={"formDateOfBirth"}
+                fieldName={"dateOfBirth"}
+                placeHolder={"Select your date of birth"}
               />
             </Row>
             <Button variant="primary" type="submit">

@@ -11,6 +11,13 @@ const FormDropdown = ({
   fieldName,
   dropdownData,
 }) => {
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: errors[fieldName]?.message && "1px solid red",
+    }),
+  };
+
   return (
     <Form.Group as={Col} controlId={formControlId}>
       <Form.Label>{label}</Form.Label>
@@ -21,6 +28,7 @@ const FormDropdown = ({
           defaultValue={""}
           render={({ field }) => (
             <Select
+              styles={customStyles}
               options={dropdownData}
               placeholder={placeholder}
               value={dropdownData.find((c) => c.value === field.value)}

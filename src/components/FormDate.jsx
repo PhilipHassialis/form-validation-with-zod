@@ -3,18 +3,30 @@ import { Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const FormDate = ({ formControlId, label, control, errors }) => {
+const FormDate = ({
+  formControlId,
+  label,
+  control,
+  errors,
+  fieldName,
+  placeHolder,
+}) => {
   return (
     <Form.Group as={Col} controlId={formControlId}>
       <Form.Label>{label}</Form.Label>
       <Controller
-        name={"dateOfBirth"}
+        name={fieldName}
         control={control}
         render={({ field }) => (
           <DatePicker
-            isClearable
-            customInput={<input className="form-control" />}
-            placeholderText="Select date"
+            customInput={
+              <input
+                className={`form-control ${
+                  errors[fieldName]?.message && "is-invalid"
+                } `}
+              />
+            }
+            placeholderText={placeHolder}
             onChange={(date) => {
               field.onChange(date);
             }}
@@ -23,9 +35,9 @@ const FormDate = ({ formControlId, label, control, errors }) => {
           />
         )}
       />
-      {errors.dateOfBirth?.message && (
+      {errors[fieldName]?.message && (
         <div style={{ color: "red", fontSize: "0.8rem" }}>
-          {errors.dateOfBirth.message}
+          {errors[fieldName].message}
         </div>
       )}
     </Form.Group>

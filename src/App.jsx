@@ -6,31 +6,7 @@ import { useEffect, useState } from "react";
 import FormDate from "./components/FormDate";
 import FormString from "./components/FormString";
 import FormDropdown from "./components/FormDropdown";
-
-const schema = z
-  .object({
-    firstName: z.string().min(1, { message: "First name is required" }),
-    lastName: z.string().min(8),
-    email: z.string().email(),
-    password: z.string().min(5),
-    confirmPassword: z.string().min(5),
-    country: z.string().min(2, { message: "Country is required" }),
-    dateOfBirth: z.date(),
-  })
-  .superRefine((data, ctx) => {
-    if (data.password !== data.confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password and Confirm Password must match",
-        path: ["password"],
-      });
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password and Confirm Password must match",
-        path: ["confirmPassword"],
-      });
-    }
-  });
+import { newuser as newuserSchema } from "./schemas/newuser";
 
 function App() {
   const {
@@ -38,7 +14,7 @@ function App() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(newuserSchema),
   });
 
   const submitForm = (data) => {
@@ -136,7 +112,6 @@ function App() {
                 formControlId={"formDateOfBirth"}
               />
             </Row>
-
             <Button variant="primary" type="submit">
               Submit
             </Button>

@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-const enums = ["Home", "Work", "Personal", "Other"];
-const phoneEnums = z.enum(enums);
+export const phoneCategories = ["Home", "Work", "Personal", "Other"];
+export const initialPhoneType = {phoneType:"", phone:""}
+const phoneCategoryEnums = z.enum(phoneCategories);
 
 export const newuser = z
   .object({
@@ -22,7 +23,7 @@ export const newuser = z
     dateOfBirth: z.date(),
     phones: z
       .object({
-        phoneType: phoneEnums,
+        phoneType: phoneCategoryEnums,
         phone: z.string().min(1, "Phone number is required"),
       })
       .array(),

@@ -1,11 +1,12 @@
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormDate from "./components/FormDate";
 import FormString from "./components/FormString";
 import FormDropdown from "./components/FormDropdown";
-import { newuser as newuserSchema } from "./schemas/newuser";
+import { initialPhoneType, newuser as newuserSchema } from "./schemas/newuser";
 import { getCountriesData } from "./hooks/dataHooks";
+import Phone from "./components/Phone";
 
 function App() {
   const {
@@ -14,6 +15,21 @@ function App() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(newuserSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      countryOfBirth: "",
+      dateOfBirth: null,
+      phones: [],
+    },
+  });
+
+  const { fields: fieldPhones, append } = useFieldArray({
+    control,
+    name: "phones",
   });
 
   const countriesData = getCountriesData();
@@ -24,6 +40,7 @@ function App() {
 
   return (
     <Container>
+      <div style={{ marginBottom: "1em" }}>{JSON.stringify(errors)}</div>
       <Row>
         <Col>
           <Form onSubmit={handleSubmit(submitForm)}>
@@ -94,6 +111,34 @@ function App() {
                 fieldName={"dateOfBirth"}
                 placeHolder={"Select your date of birth"}
               />
+            </Row>
+            {fieldPhones.length === 0 && (
+              <Row>
+                <Col>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      append({ ...initialPhoneType });
+                    }}
+                  >
+                    Add Phone
+                  </Button>
+                </Col>
+              </Row>
+            )}
+            <Row>
+              <Col>
+                {fieldPhones.map((phoneItem, idx) => {
+                  return (
+                    <Phone
+                      key={phoneItem.id}
+                      fieldName={`phones[${idx}]`}
+                      control={control}
+                      errors={errors}
+                    />
+                  );
+                })}
+              </Col>
             </Row>
             <Button variant="primary" type="submit">
               Submit

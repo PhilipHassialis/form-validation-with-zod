@@ -27,7 +27,11 @@ function App() {
     },
   });
 
-  const { fields: fieldPhones, append } = useFieldArray({
+  const {
+    fields: fieldPhones,
+    append,
+    remove,
+  } = useFieldArray({
     control,
     name: "phones",
   });
@@ -135,6 +139,9 @@ function App() {
                       fieldName={`phones[${idx}]`}
                       control={control}
                       errors={errors}
+                      remove={remove}
+                      append={append}
+                      index={idx}
                     />
                   );
                 })}

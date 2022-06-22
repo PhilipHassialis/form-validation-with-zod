@@ -1,7 +1,7 @@
 import { Row, Col } from "react-bootstrap";
-import { phoneCategories } from "../schemas/newuser";
-import FormDropdown from "./FormDropdown";
-import FormString from "./FormString";
+import { phoneCategories } from "../../schemas/newuser";
+import FormDropdown from "../UI/FormDropdown";
+import FormString from "../UI/FormString";
 
 const phoneData = phoneCategories.map((cat) => ({
   value: cat,

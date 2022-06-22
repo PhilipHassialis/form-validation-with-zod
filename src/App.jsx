@@ -1,12 +1,12 @@
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormDate from "./components/FormDate";
-import FormString from "./components/FormString";
-import FormDropdown from "./components/FormDropdown";
+import FormDate from "./components/UI/FormDate";
+import FormString from "./components/UI/FormString";
+import FormDropdown from "./components/UI/FormDropdown";
 import { initialPhoneType, newuser as newuserSchema } from "./schemas/newuser";
 import { getCountriesData } from "./hooks/dataHooks";
-import Phone from "./components/Phone";
+import Phone from "./components/Phone/Phone";
 
 function App() {
   const {

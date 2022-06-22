@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const phoneCategories = ["Home", "Work", "Personal", "Other"];
-export const initialPhoneType = {phoneType:"", phone:""}
+export const initialPhoneType = { phoneType: "", phone: "" };
 const phoneCategoryEnums = z.enum(phoneCategories);
 
 export const newuser = z

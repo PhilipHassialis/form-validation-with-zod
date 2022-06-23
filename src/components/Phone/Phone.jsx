@@ -11,7 +11,7 @@ const phoneData = phoneCategories.map((cat) => ({
 const Phone = ({ control, errors, fieldName, append, remove, index }) => {
   return (
     <Row>
-      <Col sm={4}>
+      <Col sm={3}>
         <Row>
           <FormDropdown
             control={control}
@@ -36,7 +36,7 @@ const Phone = ({ control, errors, fieldName, append, remove, index }) => {
           />
         </Row>
       </Col>
-      <Col sm={2} style={{ marginTop: "2rem" }}>
+      <Col sm={3} style={{ marginTop: "2rem" }}>
         <Button
           variant="warning"
           style={{ marginRight: "2px" }}

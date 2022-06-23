@@ -1,4 +1,4 @@
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Accordion } from "react-bootstrap";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormDate from "./components/UI/FormDate";
@@ -116,40 +116,61 @@ function App() {
                 placeHolder={"Select your date of birth"}
               />
             </Row>
-            {fieldPhones.length === 0 && (
-              <Row>
-                <Col>
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      append({ ...initialPhoneType });
-                    }}
-                  >
-                    Add Phone
-                  </Button>
-                </Col>
-              </Row>
-            )}
             <Row>
               <Col>
-                {fieldPhones.map((phoneItem, idx) => {
-                  return (
-                    <Phone
-                      key={phoneItem.id}
-                      fieldName={`phones[${idx}]`}
-                      control={control}
-                      errors={errors}
-                      remove={remove}
-                      append={append}
-                      index={idx}
-                    />
-                  );
-                })}
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Phone information</Accordion.Header>
+                    <Accordion.Body>
+                      {fieldPhones.length === 0 && (
+                        <Row>
+                          <Col sm={2}>
+                            <Button
+                              style={{ width: "100%" }}
+                              variant="primary"
+                              onClick={() => {
+                                append({ ...initialPhoneType });
+                              }}
+                            >
+                              Add Phone
+                            </Button>
+                          </Col>
+                        </Row>
+                      )}
+                      <Row>
+                        <Col>
+                          {fieldPhones.map((phoneItem, idx) => {
+                            return (
+                              <Phone
+                                key={phoneItem.id}
+                                fieldName={`phones[${idx}]`}
+                                control={control}
+                                errors={errors}
+                                remove={remove}
+                                append={append}
+                                index={idx}
+                              />
+                            );
+                          })}
+                        </Col>
+                      </Row>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
               </Col>
             </Row>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+
+            <Row style={{ marginTop: "1rem" }}>
+              <Col sm={2}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  style={{ width: "100%" }}
+                >
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form>
         </Col>
       </Row>

@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const phoneCategories = ["Home", "Work", "Personal", "Other"];
+export const initialPhoneType = { phoneType: "", phone: "" };
+const phoneCategoryEnums = z.enum(phoneCategories);
+
 export const newuser = z
   .object({
     firstName: z.string().min(1, { message: "First name is required" }),
@@ -17,6 +21,12 @@ export const newuser = z
       .string()
       .min(2, { message: "Country of birth is required" }),
     dateOfBirth: z.date(),
+    phones: z
+      .object({
+        phoneType: phoneCategoryEnums,
+        phone: z.string().min(1, "Phone number is required"),
+      })
+      .array(),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {

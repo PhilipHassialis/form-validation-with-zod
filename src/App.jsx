@@ -1,11 +1,12 @@
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormDate from "./components/FormDate";
-import FormString from "./components/FormString";
-import FormDropdown from "./components/FormDropdown";
+import FormDate from "./components/UI/FormDate";
+import FormString from "./components/UI/FormString";
+import FormDropdown from "./components/UI/FormDropdown";
 import { newuser as newuserSchema } from "./schemas/newuser";
 import { getCountriesData } from "./hooks/dataHooks";
+import PhonesList from "./components/Phone/PhoneList";
 
 function App() {
   const {
@@ -14,6 +15,25 @@ function App() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(newuserSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      countryOfBirth: "",
+      dateOfBirth: null,
+      phones: [],
+    },
+  });
+
+  const {
+    fields: fieldPhones,
+    append,
+    remove,
+  } = useFieldArray({
+    control,
+    name: "phones",
   });
 
   const countriesData = getCountriesData();
@@ -95,9 +115,29 @@ function App() {
                 placeHolder={"Select your date of birth"}
               />
             </Row>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            <Row>
+              <Col>
+                <PhonesList
+                  fieldPhones={fieldPhones}
+                  append={append}
+                  remove={remove}
+                  errors={errors}
+                  control={control}
+                />
+              </Col>
+            </Row>
+
+            <Row style={{ marginTop: "1rem" }}>
+              <Col sm={2}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  style={{ width: "100%" }}
+                >
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form>
         </Col>
       </Row>

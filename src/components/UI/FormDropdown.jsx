@@ -1,3 +1,4 @@
+import { get } from "react-hook-form";
 import { Form, Col } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
@@ -11,10 +12,12 @@ const FormDropdown = ({
   fieldName,
   dropdownData,
 }) => {
+  const myErrs = get(errors, fieldName);
+
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      border: errors[fieldName]?.message && "1px solid red",
+      border: myErrs?.message && "1px solid red",
     }),
   };
 
@@ -38,10 +41,8 @@ const FormDropdown = ({
           )}
         />
       )}
-      {errors[fieldName]?.message && (
-        <div style={{ color: "red", fontSize: "0.8rem" }}>
-          {errors[fieldName].message}
-        </div>
+      {myErrs?.message && (
+        <div style={{ color: "red", fontSize: "0.8rem" }}>{myErrs.message}</div>
       )}
     </Form.Group>
   );

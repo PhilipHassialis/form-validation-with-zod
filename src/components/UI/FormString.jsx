@@ -1,3 +1,4 @@
+import { get } from "react-hook-form";
 import { Form, Col } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 
@@ -10,6 +11,8 @@ const FormString = ({
   fieldName,
   type = "text",
 }) => {
+  const myErrs = get(errors, fieldName);
+
   return (
     <Form.Group as={Col} className="mb-3" controlId={formControlId}>
       <Form.Label>{label}</Form.Label>
@@ -24,14 +27,12 @@ const FormString = ({
             onChange={onChange}
             value={value}
             ref={ref}
-            isInvalid={errors[fieldName]}
+            isInvalid={myErrs}
           />
         )}
       />
-      {errors[fieldName]?.message && (
-        <div style={{ color: "red", fontSize: "0.8rem" }}>
-          {errors[fieldName].message}
-        </div>
+      {myErrs?.message && (
+        <div style={{ color: "red", fontSize: "0.8rem" }}>{myErrs.message}</div>
       )}
     </Form.Group>
   );

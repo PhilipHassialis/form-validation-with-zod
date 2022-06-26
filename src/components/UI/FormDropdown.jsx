@@ -12,14 +12,14 @@ const FormDropdown = ({
   fieldName,
   dropdownData,
 }) => {
+  const myErrs = get(errors, fieldName);
+
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      border: errors[fieldName]?.message && "1px solid red",
+      border: myErrs?.message && "1px solid red",
     }),
   };
-
-  const myErrs = get(errors, fieldName);
 
   return (
     <Form.Group as={Col} controlId={formControlId}>

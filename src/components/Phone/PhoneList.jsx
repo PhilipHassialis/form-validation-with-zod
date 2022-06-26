@@ -1,6 +1,7 @@
 import { Accordion, Card, Row, Col, Button } from "react-bootstrap";
 import { initialPhoneType } from "../../schemas/newuser";
 import Phone from "./Phone.jsx";
+import React from "react";
 
 const PhonesList = ({ fieldPhones, control, errors, remove, append }) => {
   return (
@@ -56,4 +57,4 @@ const PhonesList = ({ fieldPhones, control, errors, remove, append }) => {
   );
 };
 
-export default PhonesList;
+export default React.memo(PhonesList);

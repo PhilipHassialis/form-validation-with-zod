@@ -27,7 +27,7 @@ const FormString = ({
             onChange={onChange}
             value={value}
             ref={ref}
-            isInvalid={errors[fieldName]}
+            isInvalid={myErrs}
           />
         )}
       />

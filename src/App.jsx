@@ -1,20 +1,11 @@
-import {
-  Container,
-  Form,
-  Button,
-  Row,
-  Col,
-  Accordion,
-  Card,
-} from "react-bootstrap";
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormDate from "./components/UI/FormDate";
 import FormString from "./components/UI/FormString";
 import FormDropdown from "./components/UI/FormDropdown";
-import { initialPhoneType, newuser as newuserSchema } from "./schemas/newuser";
+import { newuser as newuserSchema } from "./schemas/newuser";
 import { getCountriesData } from "./hooks/dataHooks";
-import Phone from "./components/Phone/Phone";
 import PhonesList from "./components/Phone/PhoneList";
 
 function App() {

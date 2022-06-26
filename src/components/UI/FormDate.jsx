@@ -2,6 +2,7 @@ import { Form, Col } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { get } from "react-hook-form";
 
 const FormDate = ({
   formControlId,
@@ -11,6 +12,8 @@ const FormDate = ({
   fieldName,
   placeHolder,
 }) => {
+  const myErrs = get(errors, fieldName);
+
   return (
     <Form.Group as={Col} controlId={formControlId}>
       <Form.Label>{label}</Form.Label>
@@ -21,9 +24,7 @@ const FormDate = ({
           <DatePicker
             customInput={
               <input
-                className={`form-control ${
-                  errors[fieldName]?.message && "is-invalid"
-                } `}
+                className={`form-control ${myErrs?.message && "is-invalid"} `}
               />
             }
             placeholderText={placeHolder}
@@ -35,10 +36,8 @@ const FormDate = ({
           />
         )}
       />
-      {errors[fieldName]?.message && (
-        <div style={{ color: "red", fontSize: "0.8rem" }}>
-          {errors[fieldName].message}
-        </div>
+      {myErrs?.message && (
+        <div style={{ color: "red", fontSize: "0.8rem" }}>{myErrs.message}</div>
       )}
     </Form.Group>
   );

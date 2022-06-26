@@ -1,7 +1,9 @@
+import { get } from "react-hook-form";
 import { Row, Col, Button } from "react-bootstrap";
 import { initialPhoneType, phoneCategories } from "../../schemas/newuser";
 import FormDropdown from "../UI/FormDropdown";
 import FormString from "../UI/FormString";
+import React from "react";
 
 const phoneData = phoneCategories.map((cat) => ({
   value: cat,
@@ -9,6 +11,10 @@ const phoneData = phoneCategories.map((cat) => ({
 }));
 
 const Phone = ({ control, errors, fieldName, append, remove, index }) => {
+  const myErrs = get(errors, fieldName);
+
+  console.log("render phone");
+
   return (
     <Row>
       <Col sm={3}>
@@ -23,6 +29,11 @@ const Phone = ({ control, errors, fieldName, append, remove, index }) => {
             placeholder="Select phone type"
           />
         </Row>
+        {myErrs?.phoneType?.message && (
+          <div style={{ color: "red", fontSize: "0.8rem" }}>
+            {myErrs?.phoneType?.message}
+          </div>
+        )}
       </Col>
       <Col sm={6}>
         <Row>
@@ -34,6 +45,11 @@ const Phone = ({ control, errors, fieldName, append, remove, index }) => {
             placeholder={"Please type your phone"}
             formControlId={`${fieldName}.phone`}
           />
+          {myErrs?.phone?.message && (
+            <div style={{ color: "red", fontSize: "0.8rem" }}>
+              {myErrs?.phone?.message}
+            </div>
+          )}
         </Row>
       </Col>
       <Col sm={3} style={{ marginTop: "2rem" }}>
@@ -55,4 +71,4 @@ const Phone = ({ control, errors, fieldName, append, remove, index }) => {
   );
 };
 
-export default Phone;
+export default React.memo(Phone);

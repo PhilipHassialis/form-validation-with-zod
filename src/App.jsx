@@ -1,4 +1,12 @@
-import { Container, Form, Button, Row, Col, Accordion } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  Row,
+  Col,
+  Accordion,
+  Card,
+} from "react-bootstrap";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormDate from "./components/UI/FormDate";
@@ -7,6 +15,7 @@ import FormDropdown from "./components/UI/FormDropdown";
 import { initialPhoneType, newuser as newuserSchema } from "./schemas/newuser";
 import { getCountriesData } from "./hooks/dataHooks";
 import Phone from "./components/Phone/Phone";
+import PhonesList from "./components/Phone/PhoneList";
 
 function App() {
   const {
@@ -44,7 +53,6 @@ function App() {
 
   return (
     <Container>
-      <div style={{ marginBottom: "1em" }}>{JSON.stringify(errors)}</div>
       <Row>
         <Col>
           <Form onSubmit={handleSubmit(submitForm)}>
@@ -118,45 +126,13 @@ function App() {
             </Row>
             <Row>
               <Col>
-                <Accordion>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Phone information</Accordion.Header>
-                    <Accordion.Body>
-                      {fieldPhones.length === 0 && (
-                        <Row>
-                          <Col sm={2}>
-                            <Button
-                              style={{ width: "100%" }}
-                              variant="primary"
-                              onClick={() => {
-                                append({ ...initialPhoneType });
-                              }}
-                            >
-                              Add Phone
-                            </Button>
-                          </Col>
-                        </Row>
-                      )}
-                      <Row>
-                        <Col>
-                          {fieldPhones.map((phoneItem, idx) => {
-                            return (
-                              <Phone
-                                key={phoneItem.id}
-                                fieldName={`phones[${idx}]`}
-                                control={control}
-                                errors={errors}
-                                remove={remove}
-                                append={append}
-                                index={idx}
-                              />
-                            );
-                          })}
-                        </Col>
-                      </Row>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
+                <PhonesList
+                  fieldPhones={fieldPhones}
+                  append={append}
+                  remove={remove}
+                  errors={errors}
+                  control={control}
+                />
               </Col>
             </Row>
 

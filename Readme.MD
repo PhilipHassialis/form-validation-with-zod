@@ -23,6 +23,7 @@ Some theming of the datepicker and the select components allows for a demonstrat
 - [react-bootstrap](https://react-bootstrap.github.io/) - custom controls and components
 - [react-select](https://react-select.com/) - drop down
 - [react-datepicker](https://reactdatepicker.com/) - datepicker
+- [use-swr](https://swr.vercel.app/) - custom granular fetcher with cache capabilities
 
 ## Notes
 

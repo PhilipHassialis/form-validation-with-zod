@@ -27,4 +27,4 @@ Some theming of the datepicker and the select components allows for a demonstrat
 
 ## Notes
 
-The project has some refactored controls to make the form more concise (see `components` directory) Additionally, the data are fetched through a custom hook in `hooks` directory while the schema is placed in the `schemas` directory. This approach should be considered a good practice in order to avoid code bload and allow for easier testing.
+The project has some refactored controls to make the form more concise (see `components` directory) Additionally, the data are fetched through a custom hook in `hooks` directory using SWR while the schema is placed in the `schemas` directory. This approach should be considered a good practice in order to avoid code bload and allow for easier testing.

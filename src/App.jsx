@@ -5,7 +5,7 @@ import FormDate from "./components/UI/FormDate";
 import FormString from "./components/UI/FormString";
 import FormDropdown from "./components/UI/FormDropdown";
 import { newuser as newuserSchema } from "./schemas/newuser";
-import { getCountriesData } from "./hooks/dataHooks";
+import { useCountriesData } from "./hooks/dataHooks";
 import PhonesList from "./components/Phone/PhoneList";
 
 function App() {
@@ -36,13 +36,15 @@ function App() {
     name: "phones",
   });
 
-  const countriesData = getCountriesData();
+  const { countriesData, countriesLoading } = useCountriesData();
 
   const submitForm = (data) => {
     console.log(data);
   };
 
-  return (
+  return countriesLoading ? (
+    <div>Loading...</div>
+  ) : (
     <Container>
       <Row>
         <Col>
@@ -106,6 +108,7 @@ function App() {
                 placeholder={"Select your country of birth"}
                 dropdownData={countriesData}
               />
+
               <FormDate
                 control={control}
                 errors={errors}

@@ -16,9 +16,13 @@ const Product = ({ product, control, register, fieldName, errors }) => {
       <td>{product.title}</td>
       <td>{product.price}</td>
       <td>{product.brand}</td>
-      <td>{product.category}</td>
       <td>
-        <img src={product.thumbnail} width={100} alt={product.title} />
+        <img
+          src={product.thumbnail}
+          width={100}
+          style={{ width: 100, maxHeight: 100 }}
+          alt={product.title}
+        />
       </td>
     </tr>
   );

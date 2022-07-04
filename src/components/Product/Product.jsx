@@ -1,10 +1,9 @@
-import { Row, Col } from "react-bootstrap";
 import FormCheckbox from "../UI/FormCheckbox";
 
 const Product = ({ product, control, register, fieldName, errors }) => {
   return (
-    <Row style={{ margin: "0.5em" }}>
-      <Col>
+    <tr>
+      <td>
         <FormCheckbox
           name={product.id}
           value={product.id}
@@ -13,15 +12,15 @@ const Product = ({ product, control, register, fieldName, errors }) => {
           register={register}
           errors={errors}
         />
-      </Col>
-      <Col>{product.title}</Col>
-      <Col>{product.price}</Col>
-      <Col>{product.brand}</Col>
-      <Col>{product.category}</Col>
-      <Col>
+      </td>
+      <td>{product.title}</td>
+      <td>{product.price}</td>
+      <td>{product.brand}</td>
+      <td>{product.category}</td>
+      <td>
         <img src={product.thumbnail} width={100} alt={product.title} />
-      </Col>
-    </Row>
+      </td>
+    </tr>
   );
 };
 

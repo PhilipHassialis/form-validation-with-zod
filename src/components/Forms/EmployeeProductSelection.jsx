@@ -1,4 +1,12 @@
-import { Container, Card, Row, Col, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Row,
+  Col,
+  Form,
+  Button,
+  Table,
+} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useProductsData } from "../../hooks/dataHooks";
@@ -34,16 +42,30 @@ const EmployeeProductSelection = () => {
             <Row>
               <Col>
                 <Form onSubmit={handleSubmit(onSubmit)}>
-                  {productsData.products.map((product, idx) => (
-                    <Product
-                      key={product.id}
-                      product={product}
-                      control={control}
-                      register={register}
-                      fieldName={"products"}
-                      errors={errors}
-                    />
-                  ))}
+                  <Table striped bordered>
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Thumbnail</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {productsData.products.map((product, idx) => (
+                        <Product
+                          key={product.id}
+                          product={product}
+                          control={control}
+                          register={register}
+                          fieldName={"products"}
+                          errors={errors}
+                        />
+                      ))}
+                    </tbody>
+                  </Table>
                   <Row>
                     <Col>
                       <Button type="submit">Submit</Button>

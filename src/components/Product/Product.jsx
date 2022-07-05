@@ -1,8 +1,22 @@
+import { capitalizeFirstLetter } from "../../utils/commonUtils";
 import FormCheckbox from "../UI/FormCheckbox";
 
-const Product = ({ product, control, register, fieldName, errors }) => {
+const Product = ({
+  product,
+  control,
+  register,
+  fieldName,
+  errors,
+  onRowClick,
+}) => {
   return (
-    <tr>
+    <tr
+      onClick={(e) => {
+        if (e.target.type !== "checkbox") {
+          onRowClick(product);
+        }
+      }}
+    >
       <td>
         <FormCheckbox
           name={product.id}
@@ -13,7 +27,7 @@ const Product = ({ product, control, register, fieldName, errors }) => {
           errors={errors}
         />
       </td>
-      <td>{product.title}</td>
+      <td>{capitalizeFirstLetter(product.title)}</td>
       <td>{product.price}</td>
       <td>{product.brand}</td>
       <td>

@@ -7,6 +7,7 @@ import {
   Button,
   Table,
   Accordion,
+  Modal,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,9 +19,12 @@ import {
   getProductsPerCategory,
 } from "../../utils/productUtils";
 import { capitalizeFirstLetter } from "../../utils/commonUtils";
+import { useState } from "react";
 
 const EmployeeProductSelection = () => {
   const { productsData, productsLoading } = useProductsData();
+
+  const [clickedProduct, setClickedProduct] = useState({});
 
   const {
     register,
@@ -37,8 +41,48 @@ const EmployeeProductSelection = () => {
     console.log(data);
   };
 
+  const onRowClick = (product) => {
+    setClickedProduct(product);
+  };
+
+  const modalClose = () => {
+    setClickedProduct({});
+  };
+
   return (
     <Container>
+      {clickedProduct.id && (
+        <Modal
+          size="lg"
+          show={clickedProduct.id}
+          onHide={modalClose}
+          animation={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {capitalizeFirstLetter(clickedProduct.title)} - Product
+              Information
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Row>
+              <Col>{clickedProduct.description}</Col>
+            </Row>
+            <Row>
+              {clickedProduct.images.map((image) => (
+                <Col>
+                  <img src={image} width={100} />
+                </Col>
+              ))}
+            </Row>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={modalClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
       <Card>
         <Card.Header>Product Representation</Card.Header>
         <Card.Body>
@@ -56,7 +100,12 @@ const EmployeeProductSelection = () => {
                             {capitalizeFirstLetter(category)}
                           </Accordion.Header>
                           <Accordion.Body>
-                            <Table striped bordered>
+                            <Table
+                              striped
+                              bordered
+                              hover
+                              style={{ cursor: "pointer" }}
+                            >
                               <thead>
                                 <tr>
                                   <th>Select</th>
@@ -78,6 +127,7 @@ const EmployeeProductSelection = () => {
                                     register={register}
                                     fieldName={"products"}
                                     errors={errors}
+                                    onRowClick={onRowClick}
                                   />
                                 ))}
                               </tbody>

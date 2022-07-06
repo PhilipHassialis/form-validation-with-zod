@@ -20,6 +20,7 @@ import {
 } from "../../utils/productUtils";
 import { capitalizeFirstLetter } from "../../utils/commonUtils";
 import { useState } from "react";
+import ProductModal from "../Product/ProductModal";
 
 const EmployeeProductSelection = () => {
   const { productsData, productsLoading } = useProductsData();
@@ -52,36 +53,7 @@ const EmployeeProductSelection = () => {
   return (
     <Container>
       {clickedProduct.id && (
-        <Modal
-          size="lg"
-          show={clickedProduct.id}
-          onHide={modalClose}
-          animation={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>
-              {capitalizeFirstLetter(clickedProduct.title)} - Product
-              Information
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Row>
-              <Col>{clickedProduct.description}</Col>
-            </Row>
-            <Row>
-              {clickedProduct.images.map((image) => (
-                <Col>
-                  <img src={image} width={100} />
-                </Col>
-              ))}
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={modalClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <ProductModal clickedProduct={clickedProduct} modalClose={modalClose} />
       )}
       <Card>
         <Card.Header>Product Representation</Card.Header>

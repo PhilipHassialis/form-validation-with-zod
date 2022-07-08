@@ -22,11 +22,13 @@ import { capitalizeFirstLetter } from "../../utils/commonUtils";
 import { useState } from "react";
 import ProductModal from "../Product/ProductModal";
 import { useNavigate } from "react-router-dom";
+import Confirmation from "../UI/Confirmation";
 
 const EmployeeProductSelection = () => {
   const { productsData, productsLoading } = useProductsData();
 
   const [clickedProduct, setClickedProduct] = useState({});
+  const [showConfirmBack, setShowConfirmBack] = useState(false);
 
   const {
     register,
@@ -55,13 +57,27 @@ const EmployeeProductSelection = () => {
 
   const backHandler = () => {
     if (isDirty) {
-      console.log("form dirty");
+      setShowConfirmBack(true);
+    } else {
+      navigate("/employeeRegistration");
     }
-    navigate("/employeeRegistration");
   };
 
   return (
     <Container>
+      <Confirmation
+        showCondition={showConfirmBack}
+        okClickHandler={() => {
+          navigate("/employeeRegistration");
+        }}
+        okTitle="Ok"
+        cancelHandler={() => {
+          setShowConfirmBack(false);
+        }}
+        cancelTitle="Cancel"
+        confirmMessage={"Are you sure you want to go back?"}
+        confirmTitle={"Confirmation"}
+      />
       {clickedProduct.id && (
         <ProductModal clickedProduct={clickedProduct} modalClose={modalClose} />
       )}

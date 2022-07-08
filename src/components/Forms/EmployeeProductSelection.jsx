@@ -21,6 +21,7 @@ import {
 import { capitalizeFirstLetter } from "../../utils/commonUtils";
 import { useState } from "react";
 import ProductModal from "../Product/ProductModal";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeProductSelection = () => {
   const { productsData, productsLoading } = useProductsData();
@@ -30,13 +31,15 @@ const EmployeeProductSelection = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     control,
   } = useForm({
     defaultValues: {
       products: [],
     },
   });
+
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -48,6 +51,13 @@ const EmployeeProductSelection = () => {
 
   const modalClose = () => {
     setClickedProduct({});
+  };
+
+  const backHandler = () => {
+    if (isDirty) {
+      console.log("form dirty");
+    }
+    navigate("/employeeRegistration");
   };
 
   return (
@@ -111,8 +121,19 @@ const EmployeeProductSelection = () => {
                   )}
 
                   <Row>
-                    <Col>
-                      <Button type="submit">Submit</Button>
+                    <Col sm={{ offset: 8, span: 2 }}>
+                      <Button
+                        style={{ width: "100%" }}
+                        variant="secondary"
+                        onClick={backHandler}
+                      >
+                        Back
+                      </Button>
+                    </Col>
+                    <Col sm={2}>
+                      <Button style={{ width: "100%" }} type="submit">
+                        Submit
+                      </Button>
                     </Col>
                   </Row>
                 </Form>

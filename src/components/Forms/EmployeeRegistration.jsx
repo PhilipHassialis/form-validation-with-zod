@@ -18,6 +18,7 @@ import { newuser as newuserSchema } from "../../schemas/newuser";
 import { useCountriesData } from "../../hooks/dataHooks";
 import PhonesList from "../Phone/PhoneList";
 import FormSpinner from "../UI/FormSpinner";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeRegistration = () => {
   const {
@@ -49,8 +50,10 @@ const EmployeeRegistration = () => {
 
   const { countriesData, countriesLoading } = useCountriesData();
 
+  const navigate = useNavigate();
+
   const submitForm = (data) => {
-    console.log(data);
+    navigate("/productSelection");
   };
 
   return (
@@ -146,13 +149,13 @@ const EmployeeRegistration = () => {
                   </Row>
 
                   <Row style={{ marginTop: "1rem" }}>
-                    <Col sm={2}>
+                    <Col sm={{ offset: 10, span: 2 }}>
                       <Button
                         variant="primary"
                         type="submit"
                         style={{ width: "100%" }}
                       >
-                        Submit
+                        Next
                       </Button>
                     </Col>
                   </Row>

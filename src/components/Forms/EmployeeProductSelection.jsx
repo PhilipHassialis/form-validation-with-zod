@@ -21,22 +21,27 @@ import {
 import { capitalizeFirstLetter } from "../../utils/commonUtils";
 import { useState } from "react";
 import ProductModal from "../Product/ProductModal";
+import { useNavigate } from "react-router-dom";
+import Confirmation from "../UI/Confirmation";
 
 const EmployeeProductSelection = () => {
   const { productsData, productsLoading } = useProductsData();
 
   const [clickedProduct, setClickedProduct] = useState({});
+  const [showConfirmBack, setShowConfirmBack] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     control,
   } = useForm({
     defaultValues: {
       products: [],
     },
   });
+
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -50,8 +55,31 @@ const EmployeeProductSelection = () => {
     setClickedProduct({});
   };
 
+  const backHandler = () => {
+    if (isDirty) {
+      setShowConfirmBack(true);
+    } else {
+      navigate("/employeeRegistration");
+    }
+  };
+
   return (
     <Container>
+      <Confirmation
+        showCondition={showConfirmBack}
+        okClickHandler={() => {
+          navigate("/employeeRegistration");
+        }}
+        okTitle="Ok"
+        cancelHandler={() => {
+          setShowConfirmBack(false);
+        }}
+        cancelTitle="Cancel"
+        confirmMessage={
+          "You have selected products. If you go back the selection will be lost. Are you sure you want to go back?"
+        }
+        confirmTitle={"Confirmation"}
+      />
       {clickedProduct.id && (
         <ProductModal clickedProduct={clickedProduct} modalClose={modalClose} />
       )}
@@ -111,8 +139,19 @@ const EmployeeProductSelection = () => {
                   )}
 
                   <Row>
-                    <Col>
-                      <Button type="submit">Submit</Button>
+                    <Col sm={{ offset: 8, span: 2 }}>
+                      <Button
+                        style={{ width: "100%" }}
+                        variant="secondary"
+                        onClick={backHandler}
+                      >
+                        Back
+                      </Button>
+                    </Col>
+                    <Col sm={2}>
+                      <Button style={{ width: "100%" }} type="submit">
+                        Submit
+                      </Button>
                     </Col>
                   </Row>
                 </Form>

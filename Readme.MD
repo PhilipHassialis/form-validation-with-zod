@@ -24,6 +24,7 @@ Some theming of the datepicker and the select components allows for a demonstrat
 - [react-select](https://react-select.com/) - drop down
 - [react-datepicker](https://reactdatepicker.com/) - datepicker
 - [use-swr](https://swr.vercel.app/) - custom granular fetcher with cache capabilities
+- [react-router](https://reactrouter.com) - standard routing library for react
 
 ## Notes
 

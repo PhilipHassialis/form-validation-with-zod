@@ -75,7 +75,9 @@ const EmployeeProductSelection = () => {
           setShowConfirmBack(false);
         }}
         cancelTitle="Cancel"
-        confirmMessage={"Are you sure you want to go back?"}
+        confirmMessage={
+          "You have selected products. If you go back the selection will be lost. Are you sure you want to go back?"
+        }
         confirmTitle={"Confirmation"}
       />
       {clickedProduct.id && (

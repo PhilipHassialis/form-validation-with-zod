@@ -7,10 +7,8 @@ import {
   Button,
   Table,
   Accordion,
-  Modal,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useProductsData } from "../../hooks/dataHooks";
 import FormSpinner from "../UI/FormSpinner";
 import Product from "../Product/Product";
@@ -38,8 +36,6 @@ const EmployeeProductSelection = () => {
     (state) => state.setSelectedProducts
   );
 
-  console.log("state management products", selectedProducts);
-
   const {
     register,
     handleSubmit,
@@ -55,7 +51,7 @@ const EmployeeProductSelection = () => {
 
   const onSubmit = (data) => {
     setSelectedProducts(data.products);
-    console.log(data);
+    navigate("/Review");
   };
 
   const onRowClick = (product) => {
@@ -87,7 +83,7 @@ const EmployeeProductSelection = () => {
         }}
         cancelTitle="Cancel"
         confirmMessage={
-          "You have selected products. If you go back the selection will be lost. Are you sure you want to go back?"
+          "You have changed products selection. If you go back the selection will be lost. Are you sure you want to go back?"
         }
         confirmTitle={"Confirmation"}
       />
@@ -105,7 +101,10 @@ const EmployeeProductSelection = () => {
                 <Form onSubmit={handleSubmit(onSubmit)}>
                   {getProductCategories(productsData.products).map(
                     (category) => (
-                      <Accordion style={{ marginBottom: "0.5em" }}>
+                      <Accordion
+                        key={`category_${category}`}
+                        style={{ marginBottom: "0.5em" }}
+                      >
                         <Accordion.Item eventKey="0">
                           <Accordion.Header>
                             {capitalizeFirstLetter(category)}
@@ -139,9 +138,7 @@ const EmployeeProductSelection = () => {
                                     fieldName={"products"}
                                     errors={errors}
                                     onRowClick={onRowClick}
-                                    isSelected={selectedProducts.includes(
-                                      product.id
-                                    )}
+                                    formControlId={`product_${product.id}`}
                                   />
                                 ))}
                               </tbody>

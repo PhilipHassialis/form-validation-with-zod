@@ -9,6 +9,7 @@ const Product = ({
   errors,
   onRowClick,
   isSelected,
+  label,
 }) => {
   return (
     <tr
@@ -27,6 +28,7 @@ const Product = ({
           register={register}
           errors={errors}
           checked={isSelected}
+          label={label}
         />
       </td>
       <td>{capitalizeFirstLetter(product.title)}</td>

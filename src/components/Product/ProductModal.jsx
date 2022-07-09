@@ -19,8 +19,8 @@ const ProductModal = ({ clickedProduct, modalClose }) => {
           <Col>{clickedProduct.description}</Col>
         </Row>
         <Row>
-          {clickedProduct.images.map((image) => (
-            <Col>
+          {clickedProduct.images.map((image, indx) => (
+            <Col key={`productImage_${indx}`}>
               <img src={image} width={100} />
             </Col>
           ))}

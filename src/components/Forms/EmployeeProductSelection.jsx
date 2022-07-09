@@ -23,12 +23,22 @@ import { useState } from "react";
 import ProductModal from "../Product/ProductModal";
 import { useNavigate } from "react-router-dom";
 import Confirmation from "../UI/Confirmation";
+import { useSelectedProducts } from "../../store/employeeData";
 
 const EmployeeProductSelection = () => {
   const { productsData, productsLoading } = useProductsData();
 
   const [clickedProduct, setClickedProduct] = useState({});
   const [showConfirmBack, setShowConfirmBack] = useState(false);
+
+  const selectedProducts = useSelectedProducts(
+    (state) => state.selectedProducts
+  );
+  const setSelectedProducts = useSelectedProducts(
+    (state) => state.setSelectedProducts
+  );
+
+  console.log("state management products", selectedProducts);
 
   const {
     register,
@@ -37,13 +47,14 @@ const EmployeeProductSelection = () => {
     control,
   } = useForm({
     defaultValues: {
-      products: [],
+      products: selectedProducts,
     },
   });
 
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
+    setSelectedProducts(data.products);
     console.log(data);
   };
 
@@ -128,6 +139,9 @@ const EmployeeProductSelection = () => {
                                     fieldName={"products"}
                                     errors={errors}
                                     onRowClick={onRowClick}
+                                    isSelected={selectedProducts.includes(
+                                      product.id
+                                    )}
                                   />
                                 ))}
                               </tbody>

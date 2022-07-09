@@ -25,6 +25,7 @@ Some theming of the datepicker and the select components allows for a demonstrat
 - [react-datepicker](https://reactdatepicker.com/) - datepicker
 - [use-swr](https://swr.vercel.app/) - custom granular fetcher with cache capabilities
 - [react-router](https://reactrouter.com) - standard routing library for react
+- [zustand](https://github.com/pmndrs/zustand) - a very unopinionated library for managing state in react
 
 ## Notes
 

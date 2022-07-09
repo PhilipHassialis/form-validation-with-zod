@@ -8,7 +8,7 @@ const FormCheckbox = ({
   value,
   name,
   errors,
-  formControlId,
+  checked,
 }) => {
   const myErrs = get(errors, fieldName);
 

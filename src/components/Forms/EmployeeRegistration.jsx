@@ -19,8 +19,12 @@ import { useCountriesData } from "../../hooks/dataHooks";
 import PhonesList from "../Phone/PhoneList";
 import FormSpinner from "../UI/FormSpinner";
 import { useNavigate } from "react-router-dom";
+import { useEmployeeData } from "../../store/employeeData";
 
 const EmployeeRegistration = () => {
+  const employeeData = useEmployeeData((state) => state.employeeData);
+  const setEmployeeData = useEmployeeData((state) => state.setEmployeeData);
+
   const {
     control,
     handleSubmit,
@@ -28,14 +32,7 @@ const EmployeeRegistration = () => {
   } = useForm({
     resolver: zodResolver(newuserSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      countryOfBirth: "",
-      dateOfBirth: null,
-      phones: [],
+      ...employeeData,
     },
   });
 
@@ -53,6 +50,7 @@ const EmployeeRegistration = () => {
   const navigate = useNavigate();
 
   const submitForm = (data) => {
+    setEmployeeData(data);
     navigate("/productSelection");
   };
 

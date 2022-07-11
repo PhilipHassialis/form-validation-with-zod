@@ -1,6 +1,7 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useEmployeeData, useSelectedProducts } from "../../store/employeeData";
+import EmployeeReview from "../Review/EmployeeReview";
 
 const ReveiewScreen = () => {
   const employeeData = useEmployeeData((state) => state.employeeData);
@@ -22,9 +23,7 @@ const ReveiewScreen = () => {
           <Row>
             <Col>
               <h3>Your information</h3>
-              <Row>
-                <Col></Col>
-              </Row>
+              <EmployeeReview employeeData={employeeData} />
             </Col>
           </Row>
 
